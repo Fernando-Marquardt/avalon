@@ -13,15 +13,14 @@ mysql_select_db($db_name, $db_id)
  if (isset($_SESSION["user"][0])) {$faction=faction($_SESSION["user"][10]); $imgs=$_SESSION["user"][13]; $fimgs=$faction[2];}
  else {$imgs="default/"; $fimgs="1/";}
 
-function msg($msg)
-{
- header("Location: msg.php?msg=".$msg);
+function msg($msg, $type = 'info') {
+    header("Location: msg.php?type={$type}&msg={$msg}");
 }
 
 function label($msg)
 {
  echo "<font face=\"Fixedsys\" color=\"red\">".$msg."</font>";}
- 
+
 function clean($str)
 {
  if (is_numeric($str)) $str=floor($str);
@@ -43,7 +42,7 @@ function gen_stats($dur)
  $query="SELECT count(*) FROM users where hour(timediff(now(), lastVisit))<".$dur;
  $result=mysql_query($query, $db_id);
  $row[1]=mysql_fetch_row($result);
- 
+
  return $row;
 }
 
@@ -54,7 +53,7 @@ function clean_u($dur)
  $query="SELECT id FROM users where hour(timediff(now(), lastVisit))/24>".$dur;
  $result=mysql_query($query, $db_id); $nr=0;
  for (; $row=mysql_fetch_row($result); $nr++) del_u($row[0]);
- 
+
  return $nr;
 }
 
@@ -65,7 +64,7 @@ function town_stats($col)
  $query="SELECT * from towns order by ".$col." desc";
  $result=mysql_query($query, $db_id); $town_stats=array();
  for ($i=0; $row=mysql_fetch_row($result); $i++) $town_stats[$i]=$row;
- 
+
  return $town_stats;
 }
 
@@ -76,7 +75,7 @@ function user_stats($col)
  $query="select id, name, (select sum(".$col.") from towns where owner=users.id) from users order by (select sum(".$col.") from towns where owner=users.id) desc";
  $result=mysql_query($query, $db_id); $user_stats=array();
  for ($i=0; $row=mysql_fetch_row($result); $i++) $user_stats[$i]=$row;
- 
+
  return $user_stats;
 }
 
@@ -87,7 +86,7 @@ function alliance_stats($col)
  $query="select id, name, (select sum(".$col.") from towns where owner in (select id from users where alliance=alliances.id)) from alliances order by (select sum(".$col.") from towns where owner in (select id from users where alliance=alliances.id)) desc";
  $result=mysql_query($query, $db_id); $alliance_stats=array();
  for ($i=0; $row=mysql_fetch_row($result); $i++) $alliance_stats[$i]=$row;
- 
+
  return $alliance_stats;
 }
 
@@ -97,7 +96,7 @@ function is_user($name, $email, $ip)
 
  $query="select count(*) from users where name='".$name."' or email='".$email."' or ip='".$ip."'";
  $result=mysql_query($query, $db_id);
- 
+
  $row=mysql_fetch_row($result);
  return $row[0];
 }
@@ -108,7 +107,7 @@ function login($name, $pass)
 
  $query="select * from users where name='".$name."' and pass='".$pass."' and level>0";
  $result=mysql_query($query, $db_id);
- 
+
  $row=mysql_fetch_row($result);
  return $row;
 }
@@ -119,7 +118,7 @@ function sitted($account, $sitter)
 
  $query="select * from users where name='".$account."' and sitter='".$sitter."' and level>0";
  $result=mysql_query($query, $db_id);
- 
+
  $row=mysql_fetch_row($result);
  return $row;
 }
@@ -127,7 +126,7 @@ function sitted($account, $sitter)
 function user($id)
 {
  global $db_id;
- 
+
  $query="select * from users where id=".preg_replace("/[^0-9]/","", $id);
  $result=mysql_query($query, $db_id);
  if ($result)
@@ -141,7 +140,7 @@ function user($id)
 function users()
 {
  global $db_id;
- 
+
  $query="select * from users";
  $result=mysql_query($query, $db_id); $users=array();
  for ($i=0; $row=mysql_fetch_row($result); $i++)
@@ -158,7 +157,7 @@ function user_($name)
 
  $query="select * from users where name='".$name."'";
  $result=mysql_query($query, $db_id);
- 
+
  if ($result)
  {
   $row=mysql_fetch_row($result);
@@ -215,7 +214,7 @@ for ($i=0; $alliance[2][$i]=mysql_fetch_row($result); $i++) ;
  $query="select * from pacts where type=1 and (a1=".$alliance[0][0]." or a2=".$alliance[0][0].")";
  $result=mysql_query($query, $db_id);
  for ($i=0; $alliance[3][$i]=mysql_fetch_row($result); $i++) ;
- 
+
  return $alliance;
 }
 
@@ -225,7 +224,7 @@ function alliance_($name)
 
  $query="select * from alliances where name='".$name."'";
  $result=mysql_query($query, $db_id);
- 
+
  $row=mysql_fetch_row($result);
  return $row;
 }
@@ -236,7 +235,7 @@ function alliance($id)
 
  $query="select * from alliances where id='".$id."'";
  $result=mysql_query($query, $db_id);
- 
+
  $row=mysql_fetch_row($result);
  return $row;
 }
@@ -398,7 +397,7 @@ function faction($id)
 
  $query="select * from factions where id=".$id;
  $result=mysql_query($query, $db_id);
- 
+
  $row=mysql_fetch_row($result);
  return $row;
 }
@@ -410,7 +409,7 @@ function factions()
  $factions=array();
  $query="select * from factions";
  $result=mysql_query($query, $db_id);
- 
+
  for ($i=0; $row=mysql_fetch_row($result); $i++) $factions[$i]=$row;
  return $factions;
 }
@@ -418,7 +417,7 @@ function factions()
 function town($id)
 {
  global $db_id;
- 
+
  $query="select * from towns where id=".$id;
  $result=mysql_query($query, $db_id);
  if ($result)
@@ -435,7 +434,7 @@ function town_($name)
 
  $query="select * from towns where name='".$name."'";
  $result=mysql_query($query, $db_id);
- 
+
  if ($result)
  {
   $row=mysql_fetch_row($result);
@@ -447,7 +446,7 @@ function town_($name)
 function town_xy($id)
 {
  global $db_id;
- 
+
  $query="select * from map where type=3 and subtype=".$id;
  $result=mysql_query($query, $db_id);
  $row=mysql_fetch_row($result);
@@ -460,7 +459,7 @@ function towns($id)
 
  $query="select * from towns where owner=".$id." order by isCapital desc";
  $result=mysql_query($query, $db_id); $towns=array();
- 
+
  for ($i=0; $row=mysql_fetch_row($result); $i++) {$towns[$i]=$row; $towns[$i][2]=stripslashes($row[2]); $towns[$i][14]=stripslashes($row[14]);}
  return $towns;
 }
@@ -471,7 +470,7 @@ function buildings($faction)
 
  $query="select * from buildings where faction=".$faction;
  $result=mysql_query($query, $db_id); $buildings=array();
- 
+
  for ($i=0; $row=mysql_fetch_row($result); $i++)
  {
   $buildings[$i]=$row;
@@ -490,7 +489,7 @@ function weapons($faction)
 
  $query="select * from weapons where faction=".$faction;
  $result=mysql_query($query, $db_id); $weapons=array();
- 
+
  for ($i=0; $row=mysql_fetch_row($result); $i++)
  {
 		$weapons[$i]=$row;
@@ -509,7 +508,7 @@ function units($faction)
 
  $query="select * from units where faction=".$faction;
  $result=mysql_query($query, $db_id); $units=array();
- 
+
  for ($i=0; $row=mysql_fetch_row($result); $i++)
  {
 		$units[$i]=$row;
@@ -528,7 +527,7 @@ function get_land()
 
  $query="select x, y from map where type=1";
  $result=mysql_query($query, $db_id);
- 
+
  for ($i=0; $row=mysql_fetch_row($result); $i++) $land[$i]=$row;
  return $land;
 }
@@ -550,7 +549,7 @@ function sector($x, $y)
 
  $query="select * from map where x=".$x." and y=".$y;
  $result=mysql_query($query, $db_id);
- 
+
  $row=mysql_fetch_row($result);
  return $row;
 }
@@ -619,7 +618,7 @@ function update_lastVisit($id)
  $row[1]=mysql_fetch_row($result); $row[1]=$row[1][0];
  $query="update users set lastVisit=now(), ip='".$_SERVER["REMOTE_ADDR"]."' where id=".$id;
  mysql_query($query, $db_id);
- 
+
  return $row;
 }
 
@@ -638,7 +637,7 @@ $town=town($id);
 
  $query="update towns set general='".$gen."' where id=".$id;
  $result=mysql_query($query, $db_id);
- 
+
  if ($result) header("Location: gen.php?town=".$id);
  else msg("Failed.".mysql_error());
 }
@@ -822,7 +821,7 @@ function check_r($id)
  if ($res[3]+$prod[3]*$time*$m<=$lim[1]) $res[3]+=$prod[3]*$time*$m; else $res[3]=$lim[1];
  if ($res[4]+$prod[4]*$time<=$lim[2]) $res[4]+=$prod[4]*$time; else $res[4]=$lim[2];
  $res=$res[0]."-".$res[1]."-".$res[2]."-".$res[3]."-".$res[4];
- 
+
  $query="update towns set resources='".$res."', lastCheck=now() where id=".$id;
  $result=mysql_query($query, $db_id);
 }
@@ -1021,7 +1020,7 @@ function html_weaps($weaps)
  $html_data.="</tr><tr>";
  for ($i=0; $i<count($weaps); $i++) $html_data.="<td>".$weaps[$i]."</td>";
 	$html_data.="</tr></table>";
- 
+
  return $html_data;
 }
 
@@ -1033,7 +1032,7 @@ function html_res($res)
  $html_data.="</tr><tr>";
  for ($i=0; $i<count($res); $i++) $html_data.="<td>".round($res[$i])."</td>";
 	$html_data.="</tr></table>";
- 
+
  return $html_data;
 }
 
@@ -1046,14 +1045,14 @@ function html_army($army, $f)
  $html_data.="</tr><tr>";
  for ($i=0; $i<count($army); $i++) $html_data.="<td>".$army[$i]."</td>";
 	$html_data.="</tr></table>";
- 
+
  return $html_data;
 }
 
 function check_a($id)
 {
  global $db_id, $tdif;
- 
+
  $query="select timediff(dueTime".$tdif.", now()), town, target, type, phase, army, general, uup, wup, aup, rLoot, wLoot, intel, sent, dueTime, id from a_queue where town=".$id." or target=".$id." order by dueTime asc";
  $result=mysql_query($query, $db_id);
  for (; $line=mysql_fetch_row($result); )
@@ -1196,7 +1195,7 @@ function check_t($id)
 
  $query="select timediff(dueTime".$tdif.", now()), seller, buyer, sType, sSubType, sQ, bType, bSubType, bQ from t_queue where type=1 and (seller=".$id." or buyer=".$id.") order by dueTime asc";
  $result=mysql_query($query, $db_id);
- 
+
  for (; $offer=mysql_fetch_row($result); )
   if ($offer[0][0]=="-")
   {
@@ -1296,7 +1295,7 @@ function get_tr($id)
  $result=mysql_query($query, $db_id);
  for (; $row=mysql_fetch_row($result); )
   if ($row[0]) $merchants+=ceil($row[1]/50); else $merchants+=ceil($row[1]/500);
- 
+
  return $merchants;
 }
 
@@ -1314,7 +1313,7 @@ function get_t($id)
  $query="select sType, sSubType, sQ, seller, timediff(dueTime".$tdif.", now()), bType, bSubType, bQ from t_queue where buyer=".$id." and type=1";
  $result=mysql_query($query, $db_id);
  for ($i=0; $tq[2][$i]=mysql_fetch_row($result); $i++) ;
- 
+
  return $tq;
 }
 
@@ -1484,7 +1483,7 @@ $data=explode("-", $town[6]);
 function send_report($to, $subject, $contents)
 {
  global $db_id;
- 
+
  $query="insert into reports(recipient, subject, contents, sent) values(".$to.", '".mysql_real_escape_string($subject)."', '".mysql_real_escape_string($contents)."', now())";
  $result=mysql_query($query, $db_id);
  if ($result) return 1;
@@ -1494,7 +1493,7 @@ function send_report($to, $subject, $contents)
 function send_to_all($subject, $contents)
 {
  global $db_id;
- 
+
  $users=users();
  for ($i=0; $i<count($users); $i++)
  {
@@ -1668,7 +1667,7 @@ function build($id, $b, $subB, $time, $res, $faction)
  $land[0]=explode("-", $land[0]); $land[1]=explode("-", $land[1]); $land[2]=explode("-", $land[2]); $land[3]=explode("-", $land[3]);
 
  $time=explode(":", $time);
- 
+
  $query="select max(dueTime) from c_queue where town=".$id;
  $result=mysql_query($query, $db_id);
  $row=mysql_fetch_row($result);
@@ -1682,7 +1681,7 @@ function build($id, $b, $subB, $time, $res, $faction)
  else $pop=$town[3]+$upk[$land[$b][$subB]];
  $query="update towns set population=".$pop." where id=".$id;
  $result=mysql_query($query, $db_id);
-  
+
  if ($result) echo "<script type='text/javascript'>history.go(-1)</script>";
  else msg("Failed.".mysql_error());
 }
@@ -1693,7 +1692,7 @@ function forge($a, $id, $type, $q, $time, $res)
  $town=town($id);
 
  $time=explode(":", $time);
- 
+
  if (!$a) $query="select max(dueTime) from w_queue where town=".$id;
  else $query="select dueTime from w_queue where town=".$id." and type=".$type;
  $result=mysql_query($query, $db_id); $row=mysql_fetch_row($result);
@@ -1714,7 +1713,7 @@ function train($a, $id, $type, $q, $time, $res, $weaps)
  $town=town($id); $town[7]=explode("-", $town[7]);
 
  $time=explode(":", $time);
- 
+
  if (!$a) $query="select max(dueTime) from u_queue where town=".$id;
  else $query="select dueTime from u_queue where town=".$id." and type=".$type;
  $result=mysql_query($query, $db_id);
@@ -1982,7 +1981,7 @@ function ch_capital($name, $usr_id)
 
  $usr=user($usr_id); $town=town_($name);
  if ($town[1]==$usr_id)
-  if($town[0]) 
+  if($town[0])
   {
    $query="select id from towns where isCapital=1 and owner=".$usr[0];
    $result=mysql_query($query, $db_id); $row=mysql_fetch_row($result);
@@ -2017,14 +2016,17 @@ function profile($id, $email, $desc, $sitter, $grpath, $lang)
  else msg("Failure.".mysql_error());
 }
 
-function reg($name, $pass, $email, $faction)
-{
- global $db_id;
+function reg($name, $pass, $email, $faction) {
+    global $db_id;
 
- $query="insert into users(name, pass, email, level, joined, lastVisit, points, ip, grPath, faction) values('".$name."', '".$pass."', '".$email."', 1, now(), now(), 0, '".$_SERVER["REMOTE_ADDR"]."', 'default/', ".$faction.")";
- $result=mysql_query($query, $db_id);
- if ($result) msg("Succes. You are now registered as '".$name."'. You can now login and create your town.");
- else msg("Failed.".mysql_error());
+    $query = "insert into users(name, pass, email, level, joined, lastVisit, points, ip, grPath, faction) values('".$name."', '".$pass."', '".$email."', 1, now(), now(), 0, '".$_SERVER["REMOTE_ADDR"]."', 'default/', ".$faction.")";
+    $result = mysql_query($query, $db_id);
+
+    if ($result) {
+        msg("Succes. You are now registered as '".$name."'. You can now login and create your town.", 'success');
+    } else {
+        msg("Failed.".mysql_error(), 'error');
+    }
 }
 
 function a_create($name, $founder)
@@ -2182,14 +2184,14 @@ function create($owner, $name, $x, $y, $is_cap)
 
  $query="insert into towns(owner, name, population, isCapital, morale, weapons, army, buildings, production, resources, limits, upkeep, land, general, water, uUpgrades, wUpgrades, aUpgrades, lastCheck) values(".$owner.", '".$name."', 2, ".$is_cap.", 100, '0-0-0-0-0-0-0-0-0-0-0', '0-0-0-0-0-0-0-0-0-0-0-0-0', '0-0-0-0-0-0-0-1-0-0-0-0-0-0-0-0-0-0-0-0-0-0', '15-6-6-6-0', '500-300-300-300-150', '600-400-200-20-100-0-0-0-0-0-0-0-0', 0, '".$land."', '0-0-0-0', ".$index.", '0-0-0-0-0-0-0-0-0-0-0-0-0', '0-0-0-0-0-0-0-0-0-0-0-0-0', '0-0-0-0-0-0-0-0-0-0-0-0-0', now())";
  mysql_query($query, $db_id);
- 
+
   $query="select LAST_INSERT_ID()";
   $result=mysql_query($query, $db_id);
   $row=mysql_fetch_row($result);
- 
+
  $query="update map set type=3, subtype=".$row[0]." where x=".$x." and y=".$y;
  mysql_query($query, $db_id);
- 
+
  if (!$is_cap)
  {
   $towns=towns($_SESSION["user"][0]);
@@ -2208,7 +2210,7 @@ function install($name, $pass, $email, $faction)
 
  $query="insert into users(name, pass, email, level, joined, lastVisit, points, ip, grPath, faction) values('".$name."', '".$pass."', '".$email."', 5, now(), now(), 0, '".$_SERVER["REMOTE_ADDR"]."', 'default/', ".$faction.")";
  $result=mysql_query($query, $db_id);
- 
+
  $handle = fopen ("map.dat","r") or
  die("Error opening map data file."); $ok=1;
  for ($i=0; $info[$i] = fscanf ($handle, "%i %i %i %i"); $i++)

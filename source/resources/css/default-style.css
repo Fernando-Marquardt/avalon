@@ -1,0 +1,27 @@
+.page-logo {
+    background-image: url("/resources/images/page-header-background.jpg");
+    background-position: center;
+    background-size: cover;
+    border: 1px solid #000;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.page-footer {
+    margin-top: 10px;
+}
+
+.page-footer-about {
+    text-align: center;
+}
+
+.announcement {
+    font-size: 1.5em;
+    margin: 0 0 20px;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.players-registered {
+    text-align: center;
+}

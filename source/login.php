@@ -1,84 +1,87 @@
-<?php include "antet.php"; include "func.php";
+<?php
+include "antet.php";
+include "func.php";
 
 $_SESSION = array();
 session_destroy();
+
+include 'page.header.php';
 ?>
-<html>
-<?php echo "<link rel='stylesheet' type='text/css' href='".$imgs.$fimgs."default.css'>"; ?>
+
+<div class="container">
+	<div class="page-content">
+		<div class="row">
+			<div class="col-md-4 col-md-offset-2">
+				<div class="panel panel-primary">
+					<div class="panel-heading"><?php echo $lang['userLogin']; ?></div>
+					<div class="panel-body">
+						<form class="form-horizontal" action="login_.php" method="post">
+							<div class="form-group">
+								<label for="name" class="col-sm-4 control-label"><?php echo $lang['username']; ?></label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" name="name" id="name">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="password" class="col-sm-4 control-label"><?php echo $lang['password'] ?></label>
+								<div class="col-sm-8">
+									<input type="password" class="form-control" name="pass" id="password">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-sm-offset-4 col-sm-8">
+									<button type="submit" class="btn btn-primary"><?php echo $lang['login'] ?></button><br>
+									<a href="javascript:forgot();"><?php echo $lang['emailPass'] ?></a>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading"><?php echo $lang['sitterLogin'] ?></div>
+					<div class="panel-body">
+						<form class="form-horizontal" action="sit.php" method="post">
+							<div class="form-group">
+								<label for="sitter-account" class="col-sm-4 col-md-5 control-label"><?php echo $lang['accToSit'] ?></label>
+								<div class="col-sm-8 col-md-7">
+									<input type="text" class="form-control" name="account" id="sitter-account">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="sitter-username" class="col-sm-4 col-md-5 control-label"><?php echo $lang['yourUsername'] ?></label>
+								<div class="col-sm-8 col-md-7">
+									<input type="text" class="form-control" name="name" id="sitter-username">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="sitter-password" class="col-sm-4 col-md-5 control-label"><?php echo $lang['yourPass'] ?></label>
+								<div class="col-sm-8 col-md-7">
+									<input type="password" class="form-control" name="pass" id="sitter-password">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-sm-offset-4 col-md-offset-5 col-sm-8 col-md-7">
+									<button type="submit" class="btn btn-default"><?php echo $lang['login'] ?></button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <script src="func.js" type="text/javascript"></script>
 
-<head>
-<title><?php echo $title; ?> - <?php echo $lang['login'] ?></title>
-</head>
-
-<body class="q_body">
-
-<div align="center">
-<?php echo $top_ad; ?>
-<table class="q_table">
-	<tr>
-		<td class="td_logo">
-		<?php logo($title); ?></td>
-	</tr>
-	<tr>
-		<td class="td_top_menu"><?php menu_up(); ?></td>
-	</tr>
-	<tr>
-	  <td class="td_content">
-		<table class="q_table" style="border-collapse: collapse" width="624" height="266" border="1">
-          <tr>
-            <td height="24" align="center" class='head_table'><?php echo $lang['userLogin'] ?></td>
-            <td align="center" class='head_table'><?php echo $lang['sitterLogin'] ?></td>
-          </tr>
-          <tr>
-            <td height="234" align="center"><form action="login_.php" method="post" name="form" target="_self">
-              <label><?php echo $lang['username'] ?>
-                <input class='textbox' type="text" name="name" id="name">
-              </label>
-              <p>
-                <label><?php echo $lang['password'] ?>
-                  <input class='textbox' type="password" name="pass">
-                </label>
-              </p>
-              <p>
-                <label>
-                <input class='button' type="submit" name="login" value="<?php echo $lang['login'] ?>">
-                </label>
-              </p>
-              <p><a title='<?php echo $lang['emailPass'] ?>' class='q_link' href='javascript: forgot();'><?php echo $lang['emailPass'] ?></a></p>
-            </form></td>
-            <td align="center"><form action="sit.php" method="post" name="form" target="_self">
-              <label><?php echo $lang['accToSit'] ?>
-                <input class='textbox' type="text" name="account">
-              </label>
-              <p>
-                <label><?php echo $lang['yourUsername'] ?>
-                  <input class='textbox' type="text" name="name">
-                </label>
-              </p>
-              <p>
-                <label><?php echo $lang['yourPass'] ?>
-                  <input class='textbox' type="password" name="pass">
-                </label>
-              </p>
-              <p>
-                <label>
-                <input class='button' type="submit" name="login" value="<?php echo $lang['login'] ?>">
-                </label>
-              </p>
-            </form></td>
-          </tr>
-        </table>
-		</td>
-	</tr>
-	<tr>
-		<td class="td_bottom_menu">
-		<?php menu_down(); ?></td>
-	</tr>
-</table>
-<?php echo $bottom_ad; ?>
-<p><?php about(); ?></div>
-
-</body>
-
-</html>
+<?php
+include 'page.footer.php';
+?>

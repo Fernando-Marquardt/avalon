@@ -1,11 +1,3 @@
-body.q_body {
- background-color: skyblue;
- background-repeat:no-repeat;
- background-attachment: fixed;
- overflow-x: hidden;
- font: Arial;
-}
-
 font.q_label {
  color: orange;
  font-family: Arial;

@@ -16,3 +16,9 @@ Avalon is a browser game engine based on the Devana project.
   * Now others can register new accounts and play the game.
 
 > Hint: the default map data is gathered from a BMP image in the old/sources folder using the devana_maps.exe application. The source code for it is lost. To use it follow the steps in the file menu, skipping step 2 which is a data consistency check that wasn't coded properly. The correct check should have made sure that no 2 bodies of water of different IDs are in contact. Since it is bugged, it does exactly the opposite.
+
+## Credits
+
+The original Devana engine was developed by Andrei Busuioc from http://www.devana.eu/
+
+The iconic font used for the icons in the game were created by Daniela Howe from the RPG-Awsome project found on http://nagoshiashumari.github.io/Rpg-Awesome/
