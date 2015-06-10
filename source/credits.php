@@ -1,45 +1,43 @@
-<?php include "antet.php"; include "func.php";
+<?php
+include "antet.php";
+include "func.php";
 
-$gen_stats=gen_stats(48);
+$gen_stats = gen_stats(48);
+
+include 'page.header.php';
 ?>
-<html>
-<?php echo "<link rel='stylesheet' type='text/css' href='".$imgs.$fimgs."default.css'>"; ?>
 
-<head>
-<title><?php echo $title; ?> - credits</title>
-</head>
+<div class="container">
+    <h2>Devana Credits</h2>
 
-<body class="q_body">
+    <div class="row">
+        <div class="col-xs-4 text-right"><b>Busuioc Andrei</b></div>
+        <div class="col-xs-8">main concept; html, css, php, mysql coding; default css interface.</div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4 text-right"><b>Busuioc George</b></div>
+        <div class="col-xs-8">town buildings graphics; logo.</div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4 text-right"><b>Botescu Andra</b></div>
+        <div class="col-xs-8">weapon icons;  unit graphics.</div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4 text-right"><b>kasp3r</b></div>
+        <div class="col-xs-8">multilingual core editing.</div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4 text-right"><b>Putu Yoga</b></div>
+        <div class="col-xs-8">new CSS classes.</div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4 text-right"><b>Nenad Markovic/yapi</b></div>
+        <div class="col-xs-8">
+            html &amp; javascript based town view remake; better resource view for costs in all buildings; compact menus in some pages;
+        </div>
+    </div>
+</div>
 
-<div align="center">
-<?php echo $top_ad; ?>
-    <table class="q_table">
-      <tr>
-        <td class="td_logo">
-		<?php logo($title); ?></td>
-      </tr>
-      <tr>
-        <td class="td_top_menu"><?php menu_up(); ?></td>
-      </tr>
-      <tr>
-        <td class="td_content"><p>Devana credits:</p>
-        <p><u>Busuioc Andrei</u> - main concept; html, css, php, mysql coding; default css interface.</p>
-        <p><u>Busuioc George</u> - town buildings graphics; logo.</p>
-        <p><u>Botescu Andra</u> - weapon icons;  unit graphics.</p>
-								<p><u>kasp3r</u> - multilingual core editing</p>
-								<p><u>Putu Yoga</u> - new CSS classes</p>
-								<p><u>Nenad Markovic/yapi</u> - html & javascript based town view remake; better resource view for costs in all buildings; compact menus in some pages;</p>
-        </td>
-      </tr>
-      <tr>
-        <td class="td_bottom_menu">
-          <?php menu_down(); ?>
-        </td>
-      </tr>
-    </table>
-<?php echo $bottom_ad; ?>
-<p><?php about(); ?></div>
-
-</body>
-
-</html>
+<?php
+include 'page.footer.php';
+?>

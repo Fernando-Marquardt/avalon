@@ -3,6 +3,8 @@
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
+    <link rel="stylesheet" href="resources/css/material-design-iconic-font.min.css">
+
     <link rel="stylesheet" href="resources/css/default-theme.css">
     <link rel="stylesheet" href="resources/css/default-style.css">
     <link rel="stylesheet" href="<?php echo $imgs . $fimgs; ?>default.css">

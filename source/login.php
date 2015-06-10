@@ -19,14 +19,14 @@ include 'page.header.php';
 							<div class="form-group">
 								<label for="name" class="col-sm-4 control-label"><?php echo $lang['username']; ?></label>
 								<div class="col-sm-8">
-									<input type="text" class="form-control" name="name" id="name">
+									<input type="text" class="form-control" name="name" id="name" required>
 								</div>
 							</div>
 
 							<div class="form-group">
 								<label for="password" class="col-sm-4 control-label"><?php echo $lang['password'] ?></label>
 								<div class="col-sm-8">
-									<input type="password" class="form-control" name="pass" id="password">
+									<input type="password" class="form-control" name="pass" id="password" required>
 								</div>
 							</div>
 
@@ -49,21 +49,21 @@ include 'page.header.php';
 							<div class="form-group">
 								<label for="sitter-account" class="col-sm-4 col-md-5 control-label"><?php echo $lang['accToSit'] ?></label>
 								<div class="col-sm-8 col-md-7">
-									<input type="text" class="form-control" name="account" id="sitter-account">
+									<input type="text" class="form-control" name="account" id="sitter-account" required>
 								</div>
 							</div>
 
 							<div class="form-group">
 								<label for="sitter-username" class="col-sm-4 col-md-5 control-label"><?php echo $lang['yourUsername'] ?></label>
 								<div class="col-sm-8 col-md-7">
-									<input type="text" class="form-control" name="name" id="sitter-username">
+									<input type="text" class="form-control" name="name" id="sitter-username" required>
 								</div>
 							</div>
 
 							<div class="form-group">
 								<label for="sitter-password" class="col-sm-4 col-md-5 control-label"><?php echo $lang['yourPass'] ?></label>
 								<div class="col-sm-8 col-md-7">
-									<input type="password" class="form-control" name="pass" id="sitter-password">
+									<input type="password" class="form-control" name="pass" id="sitter-password" required>
 								</div>
 							</div>
 

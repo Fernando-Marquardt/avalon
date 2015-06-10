@@ -1,75 +1,85 @@
-<?php include "antet.php"; include "func.php";
+<?php
+include "antet.php";
+include "func.php";
 
-if (isset($_SESSION["user"][0], $_GET["page"]))
-{
- $_GET["page"]=clean($_GET["page"]);
- $messages=messages($_SESSION["user"][0]);
+if (isset($_SESSION["user"][0])) {
+    $messages = messages($_SESSION["user"][0]);
+
+    $page = max(clean($_GET["page"]), 1);
+    $first_index = ($page - 1) * 10;
+    $how_many = min($first_index + 10, count($messages));
+} else {
+    header('Location: login.php');
+    die();
 }
-else {header('Location: login.php'); die();}
+
+include 'page.header.php';
 ?>
-<html>
-<?php echo "<link rel='stylesheet' type='text/css' href='".$imgs.$fimgs."default.css'>"; ?>
 
-<head>
-<title><?php echo $title; ?> - <?php echo $lang['messages'] ?></title>
-</head>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-offset-5 col-sm-2">
+            <div class="btn-group btn-group-justified">
+                <a class="btn btn-info" href="writemsg.php"><?php echo $lang['write'] ?></a>
+            </div>
+        </div>
 
-<body class="q_body">
+        <div class="col-sm-offset-2 col-sm-8">
+            <p class="text-center">
 
-<div align="center">
-<?php echo $top_ad; ?>
-    <table class="q_table">
-      <tr>
-        <td class="td_logo">
-		<?php logo($title); ?></td>
-      </tr>
-      <tr>
-        <td class="td_top_menu"><?php menu_up(); ?></td>
-      </tr>
-      <tr>
-        <td class="td_content">
-        <a class='q_link' href='writemsg.php'><?php echo $lang['write'] ?></a>
-        <table class="q_table" style="border-collapse: collapse" width="600" border="1">
-            <tr>
-              <td><?php echo $lang['subject'] ?></td>
-              <td><?php echo $lang['sender'] ?></td>
-              <td><?php echo $lang['sentAt'] ?></td>
-              <td><?php echo $lang['delete'] ?></td>
-	      <td><?php echo $lang['reply'] ?></td>
-            </tr>
-<?php for ($i=$_GET["page"]*10; $i<$_GET["page"]*10+10; $i++)
-			{
-			 if (isset($messages[$i]))
-			 {
-			  $usr=user($messages[$i][1]);
-			  echo "<tr>
-              <td>";
-					if ($messages[$i][6]) echo "[new] ";
-					echo "<a class='q_link' href='msg_view.php?type=1&id=".$messages[$i][0]."'>".$messages[$i][3]."</a></td>
-			  <td><a class='q_link' href='profile_view.php?id=".$usr[0]."'>".$usr[1]."</a></td>
-              <td>".$messages[$i][5]."</td>
-			  <td><a class='q_link' href='delmsg.php?id=".$messages[$i][0]."'>x</a></td>
-			  <td><a class='q_link' href='writemsg.php?msg=".$messages[$i][0]."'>".$lang['reply']."</a></td>
-            </tr>";
-			 }
-			}
+            </p>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading"><?php echo $lang['messages'] ?></div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th><?php echo $lang['subject'] ?></th>
+                            <th><?php echo $lang['sender'] ?></th>
+                            <th><?php echo $lang['sentAt'] ?></th>
+                            <th><?php echo $lang['delete'] ?></th>
+                            <th><?php echo $lang['reply'] ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php for ($i = $first_index; $i < $how_many; $i++): $usr = user($messages[$i][1]); ?>
+                            <tr>
+                                <td>
+                                    <?php echo ($messages[$i][6]) ? '[new]' : ''; ?>
+                                    <a href="msg_view.php?type=1&id=<?php echo $messages[$i][0]; ?>"><?php echo $messages[$i][3]; ?></a>
+                                </td>
+                                <td>
+                                    <a href="profile_view.php?id=<?php echo $usr[0]; ?>"><?php echo $usr[1]; ?></a>
+                                </td>
+                                <td><?php echo $messages[$i][5]; ?></td>
+                                <td>
+                                    <a href="delmsg.php?id=<?php echo $messages[$i][0]; ?>">x</a>
+                                </td>
+                                <td>
+                                    <a href="writemsg.php?msg=<?php echo $messages[$i][0]; ?>"><?php echo $lang['reply']; ?></a>
+                                </td>
+                            </tr>
+                        <?php endfor; ?>
+                    </tbody>
+                </table>
+
+                <div class="panel-footer">
+                    <a href="delallmsg.php"><?php echo $lang['deleteAll']; ?></a>
+                </div>
+            </div>
+
+            <nav>
+                <ul class="pagination">
+                    <?php for ($i = max($page - 5, 1); $i <= min($page + 5, ceil(count($messages) / 10)); $i++): ?>
+                        <li class="<?php echo ($page == $i) ? 'active' : ''; ?>"><a href="messages.php?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+                    <?php endfor; ?>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<?php
+include 'page.footer.php';
 ?>
-          </table>
-          <?php for ($i=$_GET["page"]-5; $i<=$_GET["page"]-1; $i++) if ($i>=0) echo "<a class='q_link' href='messages.php?page=".$i."'>".$i."</a> | ";
-		  echo $_GET["page"]." | ";
-		  for ($i=$_GET["page"]+1; $i<$_GET["page"]+5; $i++) if ($i<ceil(count($messages)/10)) echo "<a class='q_link' href='messages.php?page=".$i."'>".$i."</a> | ";
-		  echo "<a class='q_link' href='delallmsg.php'>".$lang['deleteAll']."</a>"; ?>
-        </td>
-      </tr>
-      <tr>
-        <td class="td_bottom_menu">
-          <?php menu_down(); ?>
-        </td>
-      </tr>
-    </table>
-<?php echo $bottom_ad; ?>
-<p><?php about(); ?></div>
-
-</body>
-
-</html>

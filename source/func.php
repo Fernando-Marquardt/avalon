@@ -17,9 +17,9 @@ function msg($msg, $type = 'info') {
     header("Location: msg.php?type={$type}&msg={$msg}");
 }
 
-function label($msg)
-{
- echo "<font face=\"Fixedsys\" color=\"red\">".$msg."</font>";}
+function label($msg) {
+    echo "<font face=\"Fixedsys\" color=\"red\">".$msg."</font>";
+}
 
 function clean($str)
 {
@@ -123,18 +123,21 @@ function sitted($account, $sitter)
  return $row;
 }
 
-function user($id)
-{
- global $db_id;
+function user($id) {
+    global $db_id;
 
- $query="select * from users where id=".preg_replace("/[^0-9]/","", $id);
- $result=mysql_query($query, $db_id);
- if ($result)
- {
-  $row=mysql_fetch_row($result);
-  $row[1]=stripslashes($row[1]); $row[9]=stripslashes($row[9]);
-  return $row;
- } else return 0;
+    $query = "select * from users where id=".preg_replace("/[^0-9]/","", $id);
+    $result = mysql_query($query, $db_id);
+
+    if ($result) {
+        $row = mysql_fetch_row($result);
+        $row[1] = stripslashes($row[1]);
+        $row[9] = stripslashes($row[9]);
+
+        return $row;
+    } else {
+        return 0;
+    }
 }
 
 function users()
@@ -656,34 +659,32 @@ function update_town($name, $desc, $id)
  } else msg("Name taken.");
 }
 
-function purge($id)
-{
- global $db_id;
+function purge($id) {
+    global $db_id;
 
- $query="update map set type=1, subtype=3 where type=3 and subtype=".$id;
- mysql_query($query, $db_id);
- $query="delete from a_queue where a_queue.town=".$id." or a_queue.target=".$id;
- mysql_query($query, $db_id);
- $query="delete from c_queue where c_queue.town=".$id;
- mysql_query($query, $db_id);
- $query="delete from t_queue where t_queue.seller=".$id." or t_queue.buyer=".$id;
- mysql_query($query, $db_id);
- $query="delete from u_queue where u_queue.town=".$id;
- mysql_query($query, $db_id);
- $query="delete from uup_queue where uup_queue.town=".$id;
- mysql_query($query, $db_id);
- $query="delete from w_queue where w_queue.town=".$id;
- mysql_query($query, $db_id);
- $query="delete from towns where id=".$id;
- mysql_query($query, $db_id);
+    $query="update map set type=1, subtype=3 where type=3 and subtype=".$id;
+    mysql_query($query, $db_id);
+    $query="delete from a_queue where a_queue.town=".$id." or a_queue.target=".$id;
+    mysql_query($query, $db_id);
+    $query="delete from c_queue where c_queue.town=".$id;
+    mysql_query($query, $db_id);
+    $query="delete from t_queue where t_queue.seller=".$id." or t_queue.buyer=".$id;
+    mysql_query($query, $db_id);
+    $query="delete from u_queue where u_queue.town=".$id;
+    mysql_query($query, $db_id);
+    $query="delete from uup_queue where uup_queue.town=".$id;
+    mysql_query($query, $db_id);
+    $query="delete from w_queue where w_queue.town=".$id;
+    mysql_query($query, $db_id);
+    $query="delete from towns where id=".$id;
+    mysql_query($query, $db_id);
 }
 
-function abandon($id)
-{
- global $db_id;
+function abandon($id) {
+    global $db_id;
 
- $query="update towns set owner=0 where id=".$id;
- mysql_query($query, $db_id);
+    $query = "update towns set owner=0 where id=".$id;
+    mysql_query($query, $db_id);
 }
 
 function aquire($id, $owner)
@@ -1538,18 +1539,24 @@ function messages($id)
  return $reports;
 }
 
-function reports($id)
-{
- global $db_id;
+function reports($id) {
+    global $db_id;
 
- $query="select * from reports where recipient=".$id." order by sent desc";
- $result=mysql_query($query, $db_id); $reports=array();
- for ($i=0; $row=mysql_fetch_row($result); $i++)
- {
-		$reports[$i]=$row;
-		if (strtotime($row[4])<strtotime($_SESSION["user"][4])) $reports[$i][5]=1; else $reports[$i][5]=0;//if report is new
- }
- return $reports;
+    $query = "select * from reports where recipient=".$id." order by sent desc";
+    $result = mysql_query($query, $db_id);
+    $reports = array();
+
+    for ($i = 0; $row = mysql_fetch_row($result); $i++) {
+    	$reports[$i] = $row;
+
+    	if (strtotime($row[4]) < strtotime($_SESSION["user"][4])) {
+            $reports[$i][5] = 1; //if report is new
+        } else {
+            $reports[$i][5] = 0;
+        }
+    }
+
+    return $reports;
 }
 
 function offers($sType, $sSubType, $bType, $bSubType)
@@ -1573,24 +1580,26 @@ function offer($seller, $sType, $sSubType, $bType, $bSubType)
  return $row;
 }
 
-function report($id)
-{
- global $db_id;
+function report($id) {
+    global $db_id;
 
- $query="select * from reports where id=".$id;
- $result=mysql_query($query, $db_id); $reports=array();
- $row=mysql_fetch_row($result);
- return $row;
+    $query = "select * from reports where id=".$id;
+    $result = mysql_query($query, $db_id);
+    $reports = array();
+    $row = mysql_fetch_row($result);
+
+    return $row;
 }
 
-function message($id)
-{
- global $db_id;
+function message($id) {
+    global $db_id;
 
- $query="select * from messages where id=".$id;
- $result=mysql_query($query, $db_id); $reports=array();
- $row=mysql_fetch_row($result);
- return $row;
+    $query = "select * from messages where id=".$id;
+    $result = mysql_query($query, $db_id);
+    $reports = array();
+    $row = mysql_fetch_row($result);
+
+    return $row;
 }
 
 function delrep($id, $owner)
@@ -1643,21 +1652,27 @@ function delallmsg($id)
  else msg("Failed.".mysql_error());
 }
 
-function delacc($id)
-{
- global $db_id;
+function delacc($id) {
+    global $db_id;
 
- $query="select count(*) from d_queue where user=".$id;
- $result=mysql_query($query, $db_id);
- $row=mysql_fetch_row($result);
- if (!$row[0])
- {
-  $date=strtotime("+1 day"); $date=strftime("%Y-%m-%d %H:%M:%S", $date);
-  $query="insert into d_queue(user, dueTime) values('".$id."', '".$date."')";
-  $result=mysql_query($query, $db_id);
-  if ($result) msg("Account will be deleted in 24 hours.");
-  else msg("Failed.".mysql_error());
- } else msg("Account is already scheduled for deletion.");
+    $query = "select count(*) from d_queue where user=".$id;
+    $result=mysql_query($query, $db_id);
+    $row=mysql_fetch_row($result);
+
+    if (!$row[0]) {
+        $date = strtotime("+1 day");
+        $date = strftime("%Y-%m-%d %H:%M:%S", $date);
+        $query = "insert into d_queue(user, dueTime) values('".$id."', '".$date."')";
+        $result = mysql_query($query, $db_id);
+
+        if ($result) {
+            msg("Account will be deleted in 24 hours.", 'success');
+        } else {
+            msg("Failed.".mysql_error(), 'error');
+        }
+    } else {
+        msg("Account is already scheduled for deletion.");
+    }
 }
 
 function build($id, $b, $subB, $time, $res, $faction)
@@ -1953,14 +1968,17 @@ function dispatch($town, $target, $type, $dueTime, $time, $qarmy, $army, $gen)
  if (!$result) msg("Failed.".mysql_error());
 }
 
-function pass($id, $pass)
-{
- global $db_id;
+function pass($id, $pass) {
+    global $db_id;
 
- $query="update users set pass='".$pass."' where id=".$id;
- $result=mysql_query($query, $db_id);
- if ($result) msg("Succes. Password changed.");
- else msg("Failure.".mysql_error());
+    $query = "update users set pass='".$pass."' where id=".$id;
+    $result = mysql_query($query, $db_id);
+
+    if ($result) {
+        msg("Success. Password changed.", 'success');
+    } else {
+        msg("Failure.".mysql_error(), 'error');
+    }
 }
 
 function ban($name, $value)
@@ -2006,14 +2024,17 @@ function ch_lang($id, $lang)
  else return 0;
 }
 
-function profile($id, $email, $desc, $sitter, $grpath, $lang)
-{
- global $db_id;
+function profile($id, $email, $desc, $sitter, $grpath, $lang) {
+    global $db_id;
 
- $query="update users set email='".$email."', description='".$desc."', sitter='".$sitter."', grPath='".$grpath."', lang='".$lang."' where id=".$id;
- $result=mysql_query($query, $db_id);
- if ($result) msg("Succes. Profile changed.");
- else msg("Failure.".mysql_error());
+    $query = "update users set email='".$email."', description='".$desc."', sitter='".$sitter."', grPath='".$grpath."', lang='".$lang."' where id=".$id;
+    $result = mysql_query($query, $db_id);
+
+    if ($result) {
+        msg("Succes. Profile changed.", 'success');
+    } else {
+        msg("Failure.".mysql_error(), 'error');
+    }
 }
 
 function reg($name, $pass, $email, $faction) {

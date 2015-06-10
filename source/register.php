@@ -24,21 +24,21 @@ include 'page.header.php';
 						<div class="form-group">
 							<label for="username" class="col-sm-4 control-label"><?php echo $lang['username'] ?></label>
 							<div class="col-sm-8">
-								<input type="text" class="form-control" name="name" id="username">
+								<input type="text" class="form-control" name="name" id="username" required>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="password" class="col-sm-4 control-label"><?php echo $lang['password'] ?></label>
 							<div class="col-sm-8">
-								<input type="password" class="form-control" name="pass" id="password">
+								<input type="password" class="form-control" name="pass" id="password" required>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="password_repeat" class="col-sm-4 control-label"><?php echo $lang['retypePass'] ?></label>
 							<div class="col-sm-8">
-								<input type="password" class="form-control" name="pass_" id="password_repeat">
+								<input type="password" class="form-control" name="pass_" id="password_repeat" required>
 							</div>
 						</div>
 
@@ -65,7 +65,7 @@ include 'page.header.php';
 						<div class="form-group">
 							<label for="code" class="col-sm-4 control-label"><?php echo $lang['typeCode'] ?></label>
 							<div class="col-sm-8">
-								<input type="text" class="form-control" name="code" id="code">
+								<input type="text" class="form-control" name="code" id="code" required>
 							</div>
 						</div>
 						<div class="form-group">

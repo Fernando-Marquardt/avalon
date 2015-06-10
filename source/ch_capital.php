@@ -1,50 +1,45 @@
-<?php include "antet.php"; include "func.php"; ?>
-<html>
-<?php echo "<link rel='stylesheet' type='text/css' href='".$imgs.$fimgs."default.css'>"; ?>
+<?php
+include "antet.php";
+include "func.php";
 
-<head>
-<title><?php echo $title; ?> - <?php echo $lang['changeCap'] ?></title>
-</head>
+include 'page.header.php';
+?>
 
-<body class="q_body">
+<div class="container">
+	<div class="row">
+		<div class="col-sm-offset-3 col-sm-6">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<?php echo $lang['changeCap']; ?>
+				</div>
+				<div class="panel-body">
+					<form class="form-horizontal" action="ch_capital_.php" method="post">
+						<div class="form-group">
+							<label for="name" class="col-sm-5 control-label"><?php echo $lang['becomeCap'] ?></label>
+							<div class="col-sm-7">
+								<input type="text" class="form-control" name="name" id="name" required>
+							</div>
+						</div>
 
-<div align="center">
-<?php echo $top_ad; ?>
+						<div class="form-group">
+							<label for="password" class="col-sm-5 control-label"><?php echo $lang['yourPass'] ?></label>
+							<div class="col-sm-7">
+								<input type="password" class="form-control" name="pass" id="password" required>
+							</div>
+						</div>
 
-<table class="q_table">
-	<tr>
-		<td class="td_logo">
-		<?php logo($title); ?></td>
-	</tr>
-	<tr>
-		<td class="td_top_menu"><?php menu_up(); ?></td>
-	</tr>
-	<tr>
-	  <td class="td_content">
-    <form name="form1" method="post" action="ch_capital_.php">
-	    <label>
-	    <?php echo $lang['becomeCap'] ?>: 
-	    <input class='textbox' type="text" name="name">
-	    </label>
-					<label>
-					<br>
-					<?php echo $lang['yourPass'] ?>
-					<input type="password" name="pass" class="textbox">
-					<br>
-					<input type="submit" class="button" name="del" value="<?php echo $lang['change'] ?>">
-					</label>
-	   </form>
-	  </td>
-	</tr>
-	<tr>
-		<td class="td_bottom_menu">
-		<?php menu_down(); ?></td>
-	</tr>
-</table>
+						<div class="form-group">
+							<div class="col-sm-offset-5 col-sm-7">
+								<button type="submit" class="btn btn-primary"><?php echo $lang['change'] ?></button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
-<?php echo $bottom_ad; ?>
-<p><?php about(); ?></div>
-
-</body>
-
-</html>
+<?php
+include 'page.footer.php';
+?>

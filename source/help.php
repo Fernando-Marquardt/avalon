@@ -1,42 +1,26 @@
-<?php include "antet.php"; include "func.php";
+<?php
+include "antet.php";
+include "func.php";
 
 $gen_stats=gen_stats(48);
+
+include 'page.header.php';
 ?>
-<html>
-<?php echo "<link rel='stylesheet' type='text/css' href='".$imgs.$fimgs."default.css'>"; ?>
 
-<head>
-<title><?php echo $title; ?> - <?php echo $lang['about'] ?></title>
-</head>
+<div class="container text-center">
+    <div class="well well-lg">
+        <ul class="list-inline">
+            <li><a href="guide.php"><?php echo $lang['guide']; ?></a></li>
+            <li><i class="md-more-vert"></i></li>
+            <li><a href="faq.php">FAQ</a></li>
+            <li><i class="md-more-vert"></i></li>
+            <li><a href="credits.php"><?php echo $lang['credits'] ?></a></li>
+            <li><i class="md-more-vert"></i></li>
+            <li><a href="feats.php"><?php echo $lang['features'] ?></a></li>
+        </ul>
+    </div>
+</div>
 
-<body class="q_body">
-
-<div align="center">
-<?php echo $top_ad; ?>
-    <table class="q_table">
-      <tr>
-        <td class="td_logo">
-		<?php logo($title); ?></td>
-      </tr>
-      <tr>
-        <td class="td_top_menu"><?php menu_up(); ?></td>
-      </tr>
-      <tr>
-        <td class="td_content">
-		<p>
-		<a class='q_link' href='guide.php'>guide</a> | <a class='q_link' href='faq.php'>FAQ</a> | <a class='q_link' href='credits.php'><?php echo $lang['credits'] ?></a> | <a class='q_link' href='feats.php'><?php echo $lang['features'] ?></a>
-		</p>
-        </td>
-      </tr>
-      <tr>
-        <td class="td_bottom_menu">
-          <?php menu_down(); ?>
-        </td>
-      </tr>
-    </table>
-<?php echo $bottom_ad; ?>
-<p><?php about(); ?></div>
-
-</body>
-
-</html>
+<?php
+include 'page.footer.php';
+?>
