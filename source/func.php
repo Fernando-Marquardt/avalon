@@ -2225,30 +2225,43 @@ function create($owner, $name, $x, $y, $is_cap)
  }
 }
 
-function install($name, $pass, $email, $faction)
-{
- global $db_id;
+function install($name, $pass, $email, $faction) {
+    global $db_id;
 
- $query="insert into users(name, pass, email, level, joined, lastVisit, points, ip, grPath, faction) values('".$name."', '".$pass."', '".$email."', 5, now(), now(), 0, '".$_SERVER["REMOTE_ADDR"]."', 'default/', ".$faction.")";
- $result=mysql_query($query, $db_id);
+    $query = "INSERT INTO users (name, pass, email, level, joined, lastVisit, points, ip, grPath, faction) VALUES ('{$name}', '{$pass}', '{$email}', 5, NOW(), NOW(), 0, '{$_SERVER["REMOTE_ADDR"]}', 'default/', {$faction})";
+    $result = mysql_query($query, $db_id);
 
- $handle = fopen ("map.dat","r") or
- die("Error opening map data file."); $ok=1;
- for ($i=0; $info[$i] = fscanf ($handle, "%i %i %i %i"); $i++)
- {
-  if (!$info[$i][3])
-   switch($info[$i][2])
-   {
-	   case 1: $info[$i][3]=rand(1, 6); break;
-	   case 2: $info[$i][3]=rand(1, 4); break;
-	   default: ;
-   }
-		$query="insert into map(x, y, type, subtype) values (".$info[$i][0] .", ".$info[$i][1].", ".$info[$i][2].", ".$info[$i][3].")";
-		$result=mysql_query($query, $db_id);	if (!$result) $ok=0;
- }
- fclose($handle);
- if ($ok) msg(" Succes. Map data added.");
- else msg("Failed.".mysql_error());
+    $handle = fopen("map.dat","r") or die("Error opening map data file.");
+    $ok = 1;
+
+    for ($i = 0; $info[$i] = fscanf($handle, "%i %i %i %i"); $i++) {
+        if (!$info[$i][3]) {
+            switch ($info[$i][2]) {
+                case 1:
+                    $info[$i][3] = rand(1, 6);
+                    break;
+                case 2:
+                    $info[$i][3] = rand(1, 4);
+                    break;
+                default:
+            }
+        }
+
+    	$query = "INSERT INTO map (x, y, type, subtype) VALUES ({$info[$i][0]}, {$info[$i][1]}, {$info[$i][2]}, {$info[$i][3]})";
+    	$result = mysql_query($query, $db_id);
+
+        if (!$result) {
+            $ok = 0;
+        }
+    }
+
+    fclose($handle);
+
+    if ($ok) {
+        msg('Succes. Map data added.', 'success');
+    } else {
+        msg('Failed: ' . mysql_error(), 'error');
+    }
 }
 //chat functions
 function send_chat($se, $sid, $msg, $re)

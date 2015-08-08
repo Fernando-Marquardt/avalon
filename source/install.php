@@ -1,77 +1,112 @@
-<?php include "antet.php"; include "func.php";
+<?php
+include "antet.php";
+include "func.php";
 
 $factions=factions();
 $_SESSION["code"]=rand(1000, 9999);
 ?>
+<!DOCTYPE html>
 <html>
-<?php echo "<link rel='stylesheet' type='text/css' href='".$imgs.$fimgs."default.css'>"; ?>
-
 <head>
-<title><?php echo $title; ?> - install</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="resources/css/material-design-iconic-font.min.css">
+
+    <link rel="stylesheet" href="resources/css/default-theme.css">
+    <link rel="stylesheet" href="resources/css/default-style.css">
+    <link rel="stylesheet" href="<?php echo $imgs . $fimgs; ?>default.css">
+
+    <title><?php echo $title; ?> - Installation</title>
 </head>
+<body>
 
-<body class="q_body">
+<div class="container">
+    <div class="page-logo">
+        <?php logo($title); ?>
+    </div>
+</div>
 
-<div align="center">
-<?php echo $top_ad; ?>
+<div class="container">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					Installation
+				</div>
+				<div class="panel-body">
+					<form class="form-horizontal" method="post" action="install_.php">
+						<fieldset>
+							<legend>Admin User</legend>
 
-<table class="q_table">
-	<tr>
-		<td class="td_logo">
-		<?php logo($title); ?></td>
-	</tr>
-	<tr>
-		<td class="td_top_menu"><?php menu_up(); ?></td>
-	</tr>
-	<tr>
-		<td class="td_content">
-		<form name="form1" method="post" action="install_.php">
-		  <label>Desired username
-		  <input class='textbox' type="text" name="name">
-		  </label>
-                <p>
-                  <label>Desired password
-                  <input class='textbox' type="password" name="pass">
-                  </label>
-          </p>
-                <p>
-                  <label>Retype password
-                  <input class='textbox' type="password" name="pass_">
-                  </label>
-                </p>
-                <p>
-                  <label>Valid email address
-                  <input class='textbox' type="text" name="email">
-                  </label>
-                </p>
-                <p>
-                  <label>Faction
-                  <select class='dropdown' name="faction">
-				  <?php for ($i=0; $i<count($factions); $i++) echo "<option value='".$i."'>".$factions[$i][1]."</option>"; ?>
-				  </select>
-                  </label>
-                </p>
-                <p>
-                  <label>type code '<?php echo $_SESSION["code"];?>'
-                  <input class='textbox' type="text" name="code">
-                  </label>
-                </p>
-                <p>
-                  <label>
-                  <input class='button' type="submit" name="reg" value="Submit">
-                  </label>
-                </p>
-		</form>		</td>
-	</tr>
-	<tr>
-		<td class="td_bottom_menu">
-		<?php menu_down(); ?></td>
-	</tr>
-</table>
+							<div class="form-group">
+								<label for="name" class="col-sm-4 control-label">Admin username:</label>
+								<div class="col-sm-8">
+									<input type="text" name="name" id="name" class="form-control">
+								</div>
+							</div>
 
-<?php echo $bottom_ad; ?>
-<p><?php about(); ?></div>
+							<div class="form-group">
+								<label for="pass" class="col-sm-4 control-label">Admin password:</label>
+								<div class="col-sm-8">
+									<input type="password" name="pass" id="pass" class="form-control">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="pass_" class="col-sm-4 control-label">Retype password:</label>
+								<div class="col-sm-8">
+									<input type="password" name="pass_" id="pass_" class="form-control">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="email" class="col-sm-4 control-label">Valid e-mail address:</label>
+								<div class="col-sm-8">
+									<input type="email" name="email" id="email" class="form-control">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="faction" class="col-sm-4 control-label">Faction:</label>
+								<div class="col-sm-8">
+									<select name="faction" id="faction" class="form-control">
+										<?php for ($i = 0; $i < count($factions); $i++): ?>
+											<option value="<?php echo $i; ?>"><?php echo $factions[$i][1]; ?></option>
+										<?php endfor; ?>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="code" class="col-sm-4 control-label">Type code:</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" name="code" id="code" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-4 col-sm-8">
+									<img src="captcha.php">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-sm-offset-4 col-sm-8">
+									<button type="submit" class="btn btn-primary">Submit</button>
+								</div>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+    <div class="page-footer">
+        <div class="page-footer-about"><?php about(); ?></div>
+    </div>
+</div>
 
 </body>
-
 </html>

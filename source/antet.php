@@ -4,7 +4,7 @@ if (isset($_SESSION["user"][0])) include "./language/".$_SESSION["user"][16];
 else if (isset($_SESSION["lang"])) include "./language/".$_SESSION["lang"];
 else include "./language/en.php";
 $title=$lang['title']; $announcement=$lang['announc']; $m=49; $n=49;
-$db_host="localhost"; $db_user="root"; $db_pass=""; $db_name="devana";
+$db_host="localhost"; $db_user="root"; $db_pass=""; $db_name="avalon";
 $bottom_text="Devana originally created by <a href='http://devana.eu'>Busuioc Andrei</a>. Avalon created by <a href=\"https://github.com/Fernando-Marquardt/avalon\">Fernando Marquardt</a>.";
 
 function logo($title) {
